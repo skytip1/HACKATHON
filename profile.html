@@ -1,0 +1,46 @@
+<!-- public/profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile</title>
+</head>
+<body>
+    <h1>Your Profile</h1>
+
+    <div>
+        <p>Income: <span id="income"></span></p>
+        <p>Student Status: <span id="studentStatus"></span></p>
+        <p>Roommates: <span id="roommates"></span></p>
+        <p>Location: <span id="location"></span></p>
+        <p>Job: <span id="job"></span></p>
+        <p>Salary: <span id="salary"></span></p>
+    </div>
+
+    <script>
+        async function fetchProfile() {
+            try {
+                const response = await fetch('/api/users/me');
+                const userData = await response.json();
+
+                if (response.ok) {
+                    document.getElementById('income').innerText = userData.income;
+                    document.getElementById('studentStatus').innerText = userData.studentStatus;
+                    document.getElementById('roommates').innerText = userData.roommates;
+                    document.getElementById('location').innerText = userData.location;
+                    document.getElementById('job').innerText = userData.job;
+                    document.getElementById('salary').innerText = userData.salary;
+                } else {
+                    console.error('Error fetching profile:', userData.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // Fetch the profile when the page loads
+        fetchProfile();
+    </script>
+</body>
+</html>
